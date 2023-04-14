@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Program } from "../Program";
 import { ProgramChildrenProps } from "../Program/program.types";
 import { EarthSvg } from "../../svg/EarthSvg";
-import { Conversation, User } from "../../types";
+import { Conversation,  } from "../../types";
+import { User } from "@prisma/client";
 
 export const test_user: User = {
-  id: 200,
+  id: '200',
   username: "test user",
-  profile_picture: "",
+  createdAt: new Date()
 };
 
 export function MessagesFolder({ zIndex, program_id }: ProgramChildrenProps) {

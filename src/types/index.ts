@@ -6,8 +6,8 @@ export declare interface ButtonProps extends HTMLProps<HTMLButtonElement> {
 
 export type User = {
   username: string;
-  profile_picture: string;
-  id: number;
+  createdAt: string;
+  id: string;
 };
 
 export type Message = {

@@ -12,16 +12,16 @@ export const TerminalInput = () => {
   }, []);
 
   return (
-    <div className="flex  w-[50%] h-full max-w-sm">
-      <span
+    <div className="flex  h-full w-full  ">
+      <div
         id="term-text"
-        className=" whitespace-pre-wrap h-3 w-full  justify-start break-all mt-3"
+        className=" mt-3 grid h-full w-full items-end whitespace-pre-wrap break-all p-2 "
       >
-        {">"} {term_text}
         <span>
+          {">"} {term_text}
           <span
             id="caret"
-            className="absolute h-5  text-[rgba(0,0,0,0)]  bg-white "
+            className="absolute h-5  bg-white  text-[rgba(0,0,0,0)] "
           >
             ..
           </span>
@@ -41,11 +41,11 @@ export const TerminalInput = () => {
               w-3 h-6
             bg-pink ${term_text.length == 0 ? "ml-2" : "ml-[0.5px]"}`}
           /> */}
-      </span>
+      </div>
 
       <input
         id="text-input"
-        className={`justify-start absolute opacity-0  flex text-justify  w-full h-full top-10  left-0`}
+        className={`absolute top-10 left-0  flex h-full  w-full justify-start text-justify  opacity-0`}
         onInput={handleTextInput}
         value={term_text}
       />

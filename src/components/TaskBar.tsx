@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import { ProfileSvg } from "../svg/ProfileSvg";
 import { Editor } from "./PixelEditor/Editor";
 
@@ -10,6 +11,8 @@ export const TaskBar = () => {
       {/* <Editor cell_size={10} element_id="taskbar" /> */}
 
       <ProfileSvg size={6} />
+
+      <button onClick={() => signOut()}>Log out</button>
     </div>
   );
 };

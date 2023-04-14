@@ -22,11 +22,13 @@ export const useDragging = ({
   parent_id,
   program_id,
   program_name,
+  disabled,
 }: {
   element_id: string;
   program_id: number;
   parent_id?: string;
   program_name?: string;
+  disabled?: boolean;
 }) => {
   const [isMouseDown, setisMouseDown] = useState(false);
   const router = useRouter();
@@ -134,17 +136,19 @@ export const useDragging = ({
   useEffect(() => {
     const element = document.getElementById(element_id) as HTMLElement;
     //! assign taskbar element to ref
-    taskbar_elementRef.current = element;
-    element?.addEventListener("mousedown", mousedown);
+    if (!disabled) {
+      taskbar_elementRef.current = element;
+      element?.addEventListener("mousedown", mousedown);
 
-    //! assign parent element to ref
-    parent_elementRef.current = document.getElementById(
-      parent_id as string
-    ) as HTMLElement;
+      //! assign parent element to ref
+      parent_elementRef.current = document.getElementById(
+        parent_id as string
+      ) as HTMLElement;
 
-    window.addEventListener("mousemove", drag);
-    parent_elementRef.current.addEventListener("mousedown", parentMousedown);
-    window.addEventListener("mouseup", mouseup);
+      window.addEventListener("mousemove", drag);
+      parent_elementRef.current.addEventListener("mousedown", parentMousedown);
+      window.addEventListener("mouseup", mouseup);
+    }
 
     return () => {
       window.removeEventListener("mousemove", drag);
@@ -156,4 +160,6 @@ export const useDragging = ({
       );
     };
   }, [mousedown, mouseup, drag, element_id, parentMousedown, parent_id]);
+
+  if (disabled) return;
 };

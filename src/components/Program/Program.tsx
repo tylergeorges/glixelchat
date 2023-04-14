@@ -627,12 +627,15 @@ export const Program = ({
   bar_color,
   zIndex,
   program_id,
+  className,
+  draggable,
 }: ProgramProps) => {
   useDragging({
     element_id: `title-bar-program_id-${program_id}`,
     parent_id: `program-program_name-${program_id}`,
     program_id: program_id,
     program_name: program_name,
+    disabled: !draggable ?? false,
   });
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
   const router = useRouter();
@@ -649,11 +652,14 @@ export const Program = ({
       draggable={false}
       // href={`/?program=${program_name}`}
       id={`program-program_name-${program_id}`}
-      className={`${
-        router.query.program == program_name
-          ? "active-program"
-          : "inactive-program"
-      }  program program-color-${bar_color} absolute   box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center self-center bg-${bar_color}  p-2 `}
+      className={
+        className ??
+        `${
+          router.query.program == program_name
+            ? "active-program"
+            : "inactive-program"
+        }  program program-color-${bar_color} absolute   box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center self-center bg-${bar_color}  p-2 `
+      }
       onClick={handleProgramClick}
     >
       <div className="flex w-full flex-row items-center justify-center  ">
@@ -665,9 +671,11 @@ export const Program = ({
         {/* <button className=" w-5 h-5  border-dark mx-2 ml-1 text-dark text-center">
           -
         </button> */}
-        <button className=" clickable  mx-2 ml-0  text-4xl  text-lighter-200  ">
-          x
-        </button>
+        {draggable && (
+          <button className=" clickable  mx-2 ml-0  text-4xl  text-lighter-200  ">
+            x
+          </button>
+        )}
       </div>
       <ProgramContent>{children}</ProgramContent>
     </div>
