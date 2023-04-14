@@ -15,6 +15,7 @@ export const CanvasHelper = ({
     navigator.clipboard.writeText(JSON.stringify(json_art, undefined, 4));
   };
 
+  
   return (
     <div className="bg-black border-2 border-white h-20 w-40 absolute top-36  flex justify-center">
       <button className="bg-pink p-4 self-center " onClick={copyJSON}>
