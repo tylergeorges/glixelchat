@@ -33,7 +33,7 @@ export default async function handler(
       take: 100,
     });
 
-    const users =  found_posts.map(async (post) => {
+    const posts =  found_posts.map(async (post) => {
       return {
         author: await prisma.user.findFirst({
           where: {
@@ -43,7 +43,7 @@ export default async function handler(
       };
     });
 
-    const posts = users.map((user) => )
+    // const posts = users.map((user) => )
 
     return res.status(200).json(posts);
     // res.json({ posts });
