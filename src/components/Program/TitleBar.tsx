@@ -4,15 +4,17 @@ export const TitleBar = ({
   program_id,
 }: {
   program_name: string;
-  bar_color: "pink" | "dark";
+  bar_color: "pink" | "dark" | "light" | "lighter";
   program_id: number;
 }) => {
   return (
     <div
       id={`title-bar-program_id-${program_id}`}
-      className={`title-bar title-bar-${bar_color}   bg-${bar_color} w-full h-11 text-base_gray text-lg text-left p-1 font-PixelBold`}
+      className={`title-bar title-bar-${bar_color}  font-PixelBold h-full w-full  flex-row    bg-dark p-1 text-left text-lg text-base_gray`}
     >
       {program_name}
+
+      
     </div>
   );
 };

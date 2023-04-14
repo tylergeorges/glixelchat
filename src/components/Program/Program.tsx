@@ -5,7 +5,9 @@ import { RenderPix } from "../PixelEditor/RenderPix";
 import { TitleBar } from "./TitleBar";
 import { ProgramProps } from "./program.types";
 import { useDesktopContext } from "../../util/DesktopContext";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // const topbar ={
 //     "1": {
@@ -630,10 +632,12 @@ export const Program = ({
     element_id: `title-bar-program_id-${program_id}`,
     parent_id: `program-program_name-${program_id}`,
     program_id: program_id,
+    program_name: program_name,
   });
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
-
+  const router = useRouter();
   const handleProgramClick = useCallback(() => {
+    // router.push(`/?program=${program_name}`);
     if (activeProgramId !== program_id) {
       changeActiveProgram({ program_id });
     }
@@ -641,22 +645,27 @@ export const Program = ({
 
   return (
     <div
+      // passHref={true}
+      draggable={false}
+      // href={`/?program=${program_name}`}
       id={`program-program_name-${program_id}`}
       className={`${
-        zIndex == 10 ? "active-program" : "inactive-program"
-      }  program absolute  box-border flex flex-col items-center justify-center self-center w-2/3 max-w-4xl h-1/2 bg-${bar_color} p-1`}
+        router.query.program == program_name
+          ? "active-program"
+          : "inactive-program"
+      }  program program-color-${bar_color} absolute   box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center self-center bg-${bar_color}  p-2 `}
       onClick={handleProgramClick}
     >
-      <div className="flex flex-row w-full justify-center items-center">
+      <div className="flex w-full flex-row items-center justify-center  ">
         <TitleBar
           program_id={program_id}
           bar_color={bar_color}
           program_name={program_name}
         />
-        <button className="title-bar-button w-5 h-5 bg-light_dark border-dark mx-2 ml-1 text-dark text-center">
+        {/* <button className=" w-5 h-5  border-dark mx-2 ml-1 text-dark text-center">
           -
-        </button>
-        <button className="title-bar-button w-5 h-5 bg-red-600 mx-2 ml-0 text-dark text-center">
+        </button> */}
+        <button className=" clickable  mx-2 ml-0  text-4xl  text-lighter-200  ">
           x
         </button>
       </div>

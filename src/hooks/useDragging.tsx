@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDesktopContext } from "../util/DesktopContext";
+import { useRouter } from "next/router";
 
 interface InitCoords {
   /**The mouse x-coord on the initial click. */
@@ -20,13 +21,15 @@ export const useDragging = ({
   element_id,
   parent_id,
   program_id,
+  program_name,
 }: {
   element_id: string;
-  parent_id?: string;
   program_id: number;
+  parent_id?: string;
+  program_name?: string;
 }) => {
   const [isMouseDown, setisMouseDown] = useState(false);
-
+  const router = useRouter();
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
   // const isMouseDown = useRef(false);
   const parent_elementRef = useRef<HTMLElement>();
@@ -76,10 +79,7 @@ export const useDragging = ({
       // console.log( e.clientY - initCoords.y, desktop_element.offsetHeight)
 
       //! makes sure the program dosent go past the taskbar
-      if (
-        PROGRAM_HEIGHT < MAX_HEIGHT &&
-        y > taskbar_height
-      ) {
+      if (PROGRAM_HEIGHT < MAX_HEIGHT && y > taskbar_height) {
         parent_elementRef.current.style.top = y + "px";
       }
 
@@ -97,6 +97,7 @@ export const useDragging = ({
 
   const mousedown = useCallback(
     (e: MouseEvent) => {
+      router.push(`/?program=${program_name}`);
       setInitCoords((prev) => (prev = { x: e.offsetX, y: e.offsetY }));
       setisMouseDown((prev) => true);
 
@@ -104,7 +105,14 @@ export const useDragging = ({
         changeActiveProgram({ program_id });
       }
     },
-    [isMouseDown, initCoords, changeActiveProgram, program_id]
+    [
+      isMouseDown,
+      initCoords,
+      changeActiveProgram,
+      program_id,
+      router,
+      program_name,
+    ]
   );
 
   const parentMousedown = useCallback(

@@ -6,7 +6,7 @@ import { Desktop } from "../src/components/Desktop";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex-col items-center justify-center flex w-full h-screen ">
+    <div className="flex h-screen w-full flex-col items-center justify-center ">
       <TaskBar />
       <Desktop />
     </div>
