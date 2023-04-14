@@ -16,8 +16,8 @@ export interface EditorProps {
   pixelJson?: PixelJSON;
   setPixelJson?: Dispatch<any>;
   children?: ReactNode;
-  rows?: number;
-  columns?: number;
+  rows: number;
+  columns: number;
 }
 
 // const canvas_ele = document.getElementById("editor") as HTMLCanvasElement

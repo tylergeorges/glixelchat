@@ -10,7 +10,7 @@ export const CanvasHelper = ({
   json_art,
   toggleEraseState,
 }: CanvasHelperProps) => {
-  const copyJSON = (e) => {
+  const copyJSON = (e: React.SyntheticEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText(JSON.stringify(json_art, undefined, 4));
   };
