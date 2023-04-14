@@ -50,7 +50,7 @@ const post_data = [
     id: 303,
   },
 ] as Post[];
-export function PostsFolder(props) {
+export function PostsFolder({ zIndex, program_id }: ProgramChildrenProps) {
   const [posts, setPosts] = useState<Post[]>(post_data);
   const [currentPost, setCurrentPost] = useState<Post>();
 
@@ -66,8 +66,8 @@ export function PostsFolder(props) {
     <Program
       bar_color="dark"
       program_name="posts"
-      zIndex={props.zIndex}
-      program_id={props.program_id}
+      zIndex={zIndex}
+      program_id={program_id}
     >
       <div className="flex h-full w-full flex-col">
         <div className="flex h-full w-full flex-col overflow-y-auto">

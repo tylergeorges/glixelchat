@@ -8,7 +8,7 @@ export const ProgramContent = ({
   program_id?: number;
 }) => {
   return (
-    <div passHref={true} id={`program-content-dark`} className="box-border flex h-full w-full overflow-auto ">
+    <div  id={`program-content-dark`} className="box-border flex h-full w-full overflow-auto ">
       {children}
     </div>
   );
