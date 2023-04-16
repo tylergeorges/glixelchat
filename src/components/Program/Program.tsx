@@ -627,15 +627,18 @@ export const Program = ({
   bar_color,
   zIndex,
   program_id,
-  className,
+  extra_params,
+
   draggable,
+  className,
 }: ProgramProps) => {
   useDragging({
     element_id: `title-bar-program_id-${program_id}`,
     parent_id: `program-program_name-${program_id}`,
     program_id: program_id,
     program_name: program_name,
-    disabled: !draggable ?? false,
+    extra_params:extra_params,
+    disabled: !draggable || false,
   });
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
   const router = useRouter();
@@ -653,16 +656,17 @@ export const Program = ({
       // href={`/?program=${program_name}`}
       id={`program-program_name-${program_id}`}
       className={
-        className ??
-        `${
-          router.query.program == program_name
-            ? "active-program"
-            : "inactive-program"
-        }  program program-color-${bar_color} absolute   box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center self-center bg-${bar_color}  p-2 `
+        className
+          ? `${className} program-color-${bar_color} absolute `
+          : `${
+              router.query.program == program_name
+                ? "active-program"
+                : "inactive-program"
+            }  program program-color-${bar_color} absolute   box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center self-center bg-${bar_color}  p-2 `
       }
       onClick={handleProgramClick}
     >
-      <div className="flex w-full flex-row items-center justify-center  ">
+      <div className={`flex w-full flex-row items-center justify-center bg-${bar_color}`}>
         <TitleBar
           program_id={program_id}
           bar_color={bar_color}

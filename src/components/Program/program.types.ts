@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, StyleHTMLAttributes } from "react";
 import { Post } from "../PostsFolder/PostsFolder";
 
 export interface ProgramProps {
@@ -7,12 +7,14 @@ export interface ProgramProps {
   program_name: string;
   program_id: number;
   zIndex: number;
-  className?: HTMLAttributes<HTMLDivElement["className"]>;
+  className?: string
   /**Determins if the program is draggable or not.
    *
    * Defaults to true.
    */
   draggable?: boolean;
+  
+  extra_params?: string
 }
 
 export interface ProgramChildrenProps {

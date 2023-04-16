@@ -23,12 +23,14 @@ export const useDragging = ({
   program_id,
   program_name,
   disabled,
+  extra_params,
 }: {
   element_id: string;
   program_id: number;
   parent_id?: string;
   program_name?: string;
   disabled?: boolean;
+  extra_params?: string;
 }) => {
   const [isMouseDown, setisMouseDown] = useState(false);
   const router = useRouter();
@@ -99,7 +101,19 @@ export const useDragging = ({
 
   const mousedown = useCallback(
     (e: MouseEvent) => {
-      router.push(`/?program=${program_name}`);
+      if (extra_params) {
+        router.replace(
+          `/desktop?program=${program_name}${extra_params}`,
+          undefined,
+          {
+            shallow: true,
+          }
+        );
+      } else {
+        router.replace(`/desktop?program=${program_name}`, undefined, {
+          shallow: true,
+        });
+      }
       setInitCoords((prev) => (prev = { x: e.offsetX, y: e.offsetY }));
       setisMouseDown((prev) => true);
 
@@ -134,21 +148,21 @@ export const useDragging = ({
   }, []);
 
   useEffect(() => {
-    const element = document.getElementById(element_id) as HTMLElement;
     //! assign taskbar element to ref
-    if (!disabled) {
-      taskbar_elementRef.current = element;
-      element?.addEventListener("mousedown", mousedown);
+    const element = document.getElementById(element_id) as HTMLElement;
+    taskbar_elementRef.current = element;
+    element?.addEventListener("mousedown", mousedown);
 
-      //! assign parent element to ref
-      parent_elementRef.current = document.getElementById(
-        parent_id as string
-      ) as HTMLElement;
+    //! assign parent element to ref
+    parent_elementRef.current = document.getElementById(
+      parent_id as string
+    ) as HTMLElement;
 
-      window.addEventListener("mousemove", drag);
-      parent_elementRef.current.addEventListener("mousedown", parentMousedown);
-      window.addEventListener("mouseup", mouseup);
-    }
+    window.addEventListener("mousemove", drag);
+    parent_elementRef.current.addEventListener("mousedown", parentMousedown);
+    window.addEventListener("mouseup", mouseup);
+    // if (!disabled) {
+    // }
 
     return () => {
       window.removeEventListener("mousemove", drag);

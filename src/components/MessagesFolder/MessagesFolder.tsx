@@ -11,6 +11,8 @@ export const test_user: User = {
   createdAt: new Date()
 };
 
+// const dummyMessages: = []
+
 export function MessagesFolder({ zIndex, program_id }: ProgramChildrenProps) {
   const [convos, setConvos] = useState<Conversation[]>([
     {
@@ -29,6 +31,7 @@ export function MessagesFolder({ zIndex, program_id }: ProgramChildrenProps) {
       program_name="messages"
       zIndex={zIndex}
       program_id={program_id}
+      draggable={true}
     >
       <div className="flex h-full w-full      flex-col">
         <div

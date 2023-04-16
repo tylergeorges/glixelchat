@@ -1,14 +1,16 @@
 import { User } from "@prisma/client";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import { PostResponse } from "../../../pages/api/posts/index";
 
 interface InitialState {
   user: User | undefined;
   posts: PostResponse[];
+  current_profile: string;
 }
 const initialState = {
   user: undefined,
   posts: [],
+  current_profile: "",
 } as InitialState;
 
 const mainSlice = createSlice({
@@ -24,10 +26,21 @@ const mainSlice = createSlice({
       state.posts = action.payload;
     },
     addToPosts: (state, action: PayloadAction<PostResponse>) => {
-      state.posts.concat(action.payload);
+      return { ...state, posts: [action.payload, ...state.posts] };
+    },
+    setCurrentProfile: (state, action: PayloadAction<string>) => {
+      state.current_profile = action.payload;
     },
   },
 });
 
-export const { setCurrentUser, addToPosts, setPosts } = mainSlice.actions;
+type State = { mainSlice: InitialState };
+export const selectPosts = createSelector(
+  (state: State) => state.mainSlice,
+  (mainSlice) => mainSlice.posts
+);
+
+export const selectCurrentProfile = (state:State) => state.mainSlice.current_profile
+export const selectUser = (state: State) => state.mainSlice.user;
+export const { setCurrentUser, addToPosts, setPosts, setCurrentProfile } = mainSlice.actions;
 export default mainSlice.reducer;

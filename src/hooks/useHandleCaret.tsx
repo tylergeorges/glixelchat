@@ -18,36 +18,29 @@ export const useHandleCaret = ({ term_text }: HandleCaretProps) => {
     ({ ev, term_input }: HandleKeyPress) => {
       const caret = document.getElementById("caret") as HTMLSpanElement;
 
-      const TEXT_LEN = term_text.length;
-      const CARET_POS = term_input.selectionEnd;
+      // const TEXT_LEN = term_text.length;
+      // const CARET_POS = term_input.selectionEnd;
 
       //   console.log(TEXT_LEN);
 
       const CARET_WIDTH = caret.offsetWidth / 4;
 
-      const CARET_END_POS = Math.floor(CARET_WIDTH * TEXT_LEN);
-
-      const CARET_STYLE_X = Number(caret.style.left.split("px")[0]);
-      //   let caret_x = CARET_STYLE_X || caret.offsetLeft;
       let caret_x = caret.offsetLeft;
-      //   let caret_x = CARET_POS * CARET_WIDTH;
-      //   const caret_x = caret.offsetLeft;
-      // const caret_x = caret.offsetLeft;
 
-      console.log(
-        "CARET_POS: ",
-        CARET_POS,
-        "\n CARET_END_POS: ",
-        CARET_END_POS,
-        "\n caret_x: ",
-        caret_x,
-        "\n text_len: ",
-        TEXT_LEN,
-        "\n caret width: ",
-        CARET_WIDTH,
-        "\n CARET_POS: ",
-        CARET_POS
-      );
+      // console.log(
+      //   "CARET_POS: ",
+      //   CARET_POS,
+      //   "\n CARET_END_POS: ",
+      //   CARET_END_POS,
+      //   "\n caret_x: ",
+      //   caret_x,
+      //   "\n text_len: ",
+      //   TEXT_LEN,
+      //   "\n caret width: ",
+      //   CARET_WIDTH,
+      //   "\n CARET_POS: ",
+      //   CARET_POS
+      // );
       switch (ev.keyCode) {
         case LEFT_ARROW: {
           if (caret_x > 0) {
@@ -65,14 +58,14 @@ export const useHandleCaret = ({ term_text }: HandleCaretProps) => {
         }
         case RIGHT_ARROW:
           {
-            console.log(caret_x / CARET_WIDTH)
+            console.log(caret_x / CARET_WIDTH);
             // if (caret_x / CARET_WIDTH < CARET_POS) {
-              // caret.style.position = "absolute";
-              caret_x += CARET_WIDTH;
-              //   caret_x += CARET_WIDTH;
-              //   console.log(caret_x, CARET_WIDTH);
+            // caret.style.position = "absolute";
+            caret_x += CARET_WIDTH;
+            //   caret_x += CARET_WIDTH;
+            //   console.log(caret_x, CARET_WIDTH);
 
-              caret.style.left = caret_x + "px";
+            caret.style.left = caret_x + "px";
             // }
             // caret.style.left = caret_x + "px";
           }

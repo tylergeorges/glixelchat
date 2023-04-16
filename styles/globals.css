@@ -106,8 +106,16 @@ a {
   cursor: url(https://modalzmodalzmodalz.com/assets/cursor_pointer.svg) 0 0,
     pointer;
 }
-.clickable:hover {
-  /* background-color: var(--lighter_overlay-pixel-border); */
+
+#follow-button{
+  border-image-source: var(--pink-pixel-border);
+
+  border-image-slice: 3;
+  border-image-repeat: stretch;
+  border-image-width: 3;
+  border-image-outset: 2;
+  border-width: 4px;
+  border-style: solid;
 }
 .conversation-preview_con {
   border-image-source: var(--lighter-pixel-border);
@@ -177,16 +185,16 @@ a {
   cursor: url(https://modalzmodalzmodalz.com/assets/cursor_default.svg) 0 0,
     default;
 }
-#program-content-pink {
+.program-color-pink {
   border-image-source: var(--pink-pixel-border);
 
   border-image-slice: 3;
   border-image-repeat: stretch;
-  border-image-width: 3;
-  border-image-outset: 2;
+  border-image-width: 6;
+  border-image-outset: 3;
   border-width: 4px;
   border-style: solid;
-  border-top: 0;
+  /* border-top: 0; */
 }
 .program-color-dark {
   border-image-source: var(--dark-pixel-border);

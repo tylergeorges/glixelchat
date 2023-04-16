@@ -17,13 +17,14 @@ model User {
   username    String    @db.VarChar(20)@unique
   createdAt   DateTime @default(now())
   id          String @id @default(cuid())
+  posts     Post[]
 }
 
 model Post {
   id    String  @id @default(cuid())
   createdAt   DateTime @default(now())
   content   String @db.VarChar(255)
-
+  author  User @relation(fields: [authorId], references: [id])
   authorId  String 
 
   @@index([authorId])

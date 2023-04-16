@@ -1,12 +1,11 @@
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Desktop } from "../../src/components/Desktop";
 import { TaskBar } from "../../src/components/TaskBar";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { Post } from "../../src/components/PostsFolder/PostsFolder";
-import { useDispatch } from "react-redux";
-import Nextauth, { authOptions } from "../api/auth/[...nextauth]";
+import { authOptions } from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { User } from "@prisma/client";
 import { setCurrentUser, setPosts } from "../../src/redux/slices/mainSlice";
@@ -20,7 +19,7 @@ type DesktopProps = {
 
 export default function DesktopPage({ posts, user }: DesktopProps) {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const dispatch = useAppDispatch();
 
@@ -28,9 +27,12 @@ export default function DesktopPage({ posts, user }: DesktopProps) {
     if (status === "unauthenticated") {
       router.push("/login");
     }
+  }, [status]);
+
+  useEffect(() => {
     dispatch(setPosts(posts));
     dispatch(setCurrentUser(user));
-  }, [router, status, dispatch, posts, user]);
+  }, [dispatch]);
 
   if (status === "authenticated") {
     return (
@@ -46,16 +48,17 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
   if (!session || !session.user) return;
 
-  const posts_res = await fetch("http://localhost:3000/api/posts");
-  const posts = (await posts_res.json()) as Post[];
-
   const user_res = await fetch(
     `http://localhost:3000/api/users?username=${session.user.name}`
   );
   const user = (await user_res.json()) as User;
 
-  console.log(user);
-
+  const posts_res = await fetch(
+    `http://localhost:3000/api/users/${user.id}/feed`
+  );
+  const posts = (await posts_res.json()) as Post[];
+  console.log(posts);
+            
   // const user = ctx.
 
   // try {

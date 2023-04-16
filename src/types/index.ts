@@ -13,7 +13,7 @@ export type User = {
 export type Message = {
   sender: User;
   content: string;
-  created_at: string;
+  createdAt: string;
   id: number;
 };
 

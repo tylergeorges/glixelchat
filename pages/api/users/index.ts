@@ -23,7 +23,7 @@ export default async function handler(
 
     const user = await prisma.user.findUnique({
       where: {
-        username: username,
+        username: username as string,
       },
     });
 

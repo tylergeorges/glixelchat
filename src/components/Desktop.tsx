@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Program } from "./Program";
 import { Terminal } from "./Terminal";
 import { DesktopContext } from "../util/DesktopContext";
@@ -7,6 +7,8 @@ import { MessagesFolder } from "./MessagesFolder";
 import { PostsFolder } from "./PostsFolder";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../redux/store";
+import { selectCurrentProfile } from "../redux/slices/mainSlice";
 
 type ProgramName = "terminal" | "messages" | "posts" | "profile";
 
@@ -21,22 +23,25 @@ interface HandleProgramArgs {
 export const Desktop = () => {
   const router = useRouter();
 
-  const [openedPrograms, setOpenedPrograms] = useState<Program[]>([
-    {
-      program_name: "terminal",
-    },
-    {
-      program_name: "messages",
-    },
-    {
-      program_name: "posts",
-    },
-  ]);
+  // const [openedPrograms, setOpenedPrograms] = useState<Program[]>([
+  //   {
+  //     program_name: "terminal",
+  //   },
+  //   {
+  //     program_name: "messages",
+  //   },
+  //   {
+  //     program_name: "posts",
+  //   },
+  // ]);
 
   const [activeProgramId, setActiveProgramId] = useState<number>(2);
+  const current_profile = useAppSelector(selectCurrentProfile);
 
-  const handleOpenProgram = ({ program_name }: HandleProgramArgs) => {};
-
+  const show_profile = useMemo(
+    () => current_profile.length > 0,
+    [current_profile]
+  );
   const changeActiveProgram = ({ program_id }: { program_id: number }) => {
     setActiveProgramId(program_id);
   };
@@ -46,7 +51,6 @@ export const Desktop = () => {
       id="desktop"
       className="flex h-screen  w-full justify-center bg-lighter"
     >
-      <UserPanel />
       <DesktopContext.Provider value={{ changeActiveProgram, activeProgramId }}>
         {/* {openedPrograms.map((program, idx) => {
           return (
@@ -87,6 +91,13 @@ export const Desktop = () => {
           program_id={2}
           zIndex={router.query.program === "posts" ? 10 : 0}
         />
+
+        {show_profile ? (
+          <UserPanel
+            zIndex={router.query.program == "user_profile" ? 10 : 0}
+            program_id={3}
+          />
+        ) : null}
       </DesktopContext.Provider>
     </div>
   );

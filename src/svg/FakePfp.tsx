@@ -1,10 +1,10 @@
-export function FakePfp  (){
+export function FakePfp({ className }: { className: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 -0.5 16 14"
       shape-rendering="crispEdges"
-      className="w-1/2"
+      className={className}
     >
       <path
         stroke="#000000"
@@ -18,4 +18,4 @@ export function FakePfp  (){
       <path stroke="#e5a5d0" d="M2 9h2M13 9h2M2 10h2M13 10h2" />
     </svg>
   );
-};
+}

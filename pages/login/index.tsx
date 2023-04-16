@@ -22,12 +22,12 @@ export default function LoginPage() {
             glixel
           </span>
         </div>
-        <div className="auth-con h-1/3 w-1/2 bg-light">
+        <div className="auth-con max-h- h-1/3 w-1/2 max-w-2xl bg-light">
           <div className="  flex h-full w-full flex-col items-center  ">
             <h1 className="auth-con_header text-center text-4xl">LOGIN</h1>
             <div className="flex h-full w-full items-center justify-center">
               <button
-                className="auth-button  h-20   w-full bg-lighter p-1 text-lg "
+                className="auth-button  clickable   h-20 w-full bg-lighter p-1  text-lg "
                 onClick={() => signIn("google")}
               >
                 Login with Google
