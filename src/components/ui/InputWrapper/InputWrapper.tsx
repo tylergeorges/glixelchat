@@ -1,4 +1,4 @@
-import { FormEventHandler, useState } from "react";
+import { useState } from "react";
 
 export function InputWrapper({
   submit_callback,
@@ -7,7 +7,7 @@ export function InputWrapper({
 }) {
   const [inputValue, setInputValue] = useState("");
 
-  function handleInput(e: React.FormEvent<HTMLInputElement>) {
+  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
 
     setInputValue((prev) => e.target.value);
@@ -32,7 +32,7 @@ export function InputWrapper({
         type="text"
         value={inputValue}
       />
-      <button type="submit" aria-label="Submit Post"/>
+      <button type="submit" aria-label="Submit Post" />
     </form>
   );
 }

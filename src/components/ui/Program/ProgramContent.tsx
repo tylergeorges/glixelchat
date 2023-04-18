@@ -10,8 +10,7 @@ export const ProgramContent = ({
   return (
     <div
       id={`program-content-dark`}
-      className="box-border flex h-full w-full overflow-auto "
-    >
+      className="box-border flex h-full w-full overflow-auto">
       {children}
     </div>
   );

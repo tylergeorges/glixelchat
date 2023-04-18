@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDesktopContext } from "../util/DesktopContext";
+import { useDesktopContext } from "@hooks";
 import { useRouter } from "next/router";
 
+/**The initial coordinates of where the cursor clicked.  */
 interface InitCoords {
   /**The mouse x-coord on the initial click. */
   x: number;
@@ -17,6 +18,23 @@ interface ParentCoords {
   y: number;
 }
 
+interface UseDraggingProps {
+  /**The id of the component that we want to listen to. */
+  element_id: string;
+  /** The id of the program that we want to make the active program.  */
+  program_id: number;
+  /** The id of the parent that we want to move when dragging. */
+  parent_id?: string;
+  /** The name of the program that we want to make the active program when dragging.  */
+  program_name?: string;
+  /** If dragging should be disabled
+   *
+   * Default - False
+   */
+  disabled?: boolean;
+  /** Any extra query params we want to add to the URL that helps track the programs state. */
+  extra_params?: string;
+}
 export const useDragging = ({
   element_id,
   parent_id,
@@ -24,21 +42,14 @@ export const useDragging = ({
   program_name,
   disabled,
   extra_params,
-}: {
-  element_id: string;
-  program_id: number;
-  parent_id?: string;
-  program_name?: string;
-  disabled?: boolean;
-  extra_params?: string;
-}) => {
+}: UseDraggingProps) => {
   const [isMouseDown, setisMouseDown] = useState(false);
   const router = useRouter();
+  // Sets the program thats being dragged as the active program
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
-  // const isMouseDown = useRef(false);
   const parent_elementRef = useRef<HTMLElement>();
   const taskbar_elementRef = useRef<HTMLElement>();
-  /**The  */
+  // Initialize the initial coordinates to 0
   const [initCoords, setInitCoords] = useState<InitCoords>({ x: 0, y: 0 });
   const [parentCoords, setParentCoords] = useState<ParentCoords>({
     x: 0,
@@ -54,16 +65,12 @@ export const useDragging = ({
       )
         return;
 
-      // const MAX_HEIGHT =
-      //   window.innerHeight - taskbar_elementRef.current?.offsetHeight;
       const desktop_element = document.getElementById(
         "desktop"
       ) as HTMLDivElement;
 
       const MAX_HEIGHT =
         desktop_element.offsetHeight - desktop_element.offsetTop * -1;
-      // const MAX_HEIGHT = desktop_element.offsetHeight
-      // console.log(taskbar_elementRef.current.clientHeight + taskbar_elementRef.current.offsetHeight + taskbar_elementRef.current.scrollHeight)
 
       const MAX_WIDTH = window.innerWidth;
 
@@ -80,7 +87,6 @@ export const useDragging = ({
 
       /** The width of the program from added to the mouse X position. */
       const PROGRAM_WIDTH = parent_elementRef.current.offsetWidth + x;
-      // console.log( e.clientY - initCoords.y, desktop_element.offsetHeight)
 
       //! makes sure the program dosent go past the taskbar
       if (PROGRAM_HEIGHT < MAX_HEIGHT && y > taskbar_height) {
@@ -122,26 +128,28 @@ export const useDragging = ({
       }
     },
     [
-      isMouseDown,
-      initCoords,
       changeActiveProgram,
       program_id,
       router,
       program_name,
+      activeProgramId,
+      extra_params,
     ]
   );
 
+  /** Get the coordinates of the parent component that will get dragged. */
   const parentMousedown = useCallback(
     (e: MouseEvent) => {
       if (isMouseDown) {
         setParentCoords((prev) => (prev = { x: e.offsetX, y: e.offsetY }));
       }
     },
+    //eslint-disable-next-line
     [parentCoords]
   );
 
+  /** Listener for when the dragging stops. */
   const mouseup = useCallback((e: MouseEvent) => {
-    // isMouseDown.current = false;
     setisMouseDown((prev) => false);
     setInitCoords((prev) => (prev = { x: 0, y: 0 }));
     setParentCoords((prev) => (prev = { x: 0, y: 0 }));
@@ -161,8 +169,6 @@ export const useDragging = ({
     window.addEventListener("mousemove", drag);
     parent_elementRef.current.addEventListener("mousedown", parentMousedown);
     window.addEventListener("mouseup", mouseup);
-    // if (!disabled) {
-    // }
 
     return () => {
       window.removeEventListener("mousemove", drag);

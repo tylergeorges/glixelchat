@@ -1,19 +1,18 @@
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.css";
 import { useSession } from "next-auth/react";
 import { NavBar } from "../src/components/ui/NavBar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/desktop");
     }
-  }, [status]);
+  }, [status, router]);
 
   if (status === "unauthenticated") {
     return (

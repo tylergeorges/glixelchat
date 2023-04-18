@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext,  } from "react";
 
 interface DesktopContext {
   changeActiveProgram: ({ program_id }: { program_id: number }) => void;
@@ -10,4 +10,3 @@ export const DesktopContext = createContext<DesktopContext>({
   activeProgramId: 0,
 });
 
-export const useDesktopContext = () => useContext(DesktopContext);

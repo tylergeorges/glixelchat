@@ -1,8 +1,7 @@
 import { ProgramContent } from "./ProgramContent";
-import { useDragging } from "../../../hooks/useDragging";
+import { useDragging, useDesktopContext } from "@hooks";
 import { TitleBar } from "./TitleBar";
-import { useDesktopContext } from "../../../util/DesktopContext";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useRouter } from "next/router";
 
 export const Program = ({
@@ -26,17 +25,18 @@ export const Program = ({
   const { changeActiveProgram, activeProgramId } = useDesktopContext();
   const router = useRouter();
   const handleProgramClick = useCallback(() => {
-    // router.push(`/?program=${program_name}`);
     if (activeProgramId !== program_id) {
       changeActiveProgram({ program_id });
     }
   }, [activeProgramId, changeActiveProgram, program_id]);
 
-  const handleCloseClick = useCallback(function(e) {
-    e.preventDefault()
-    setShowProgram((prev) => false)
-    
-  },[setShowProgram])
+  const handleCloseClick = useCallback(
+    function (e: Glixel.Events.ButtonEvent) {
+      e.preventDefault();
+      setShowProgram(false);
+    },
+    [setShowProgram]
+  );
   return (
     <div
       draggable={false}
@@ -48,7 +48,7 @@ export const Program = ({
               router.query.program == program_name
                 ? "active-program"
                 : "inactive-program"
-            }  program program-color-${bar_color} absolute    box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center place-self-center justify-center self-center bg-${bar_color}  p-2 `
+            }  program program-color-${bar_color} absolute    box-border flex h-1/2 w-2/3 max-w-4xl flex-col items-center justify-center place-self-center self-center bg-${bar_color}  p-2 `
       }
       onClick={handleProgramClick}
     >
@@ -60,12 +60,12 @@ export const Program = ({
           bar_color={bar_color}
           program_name={program_name}
         />
-        {/* <button className=" w-5 h-5  border-dark mx-2 ml-1 text-dark text-center">
-          -
-        </button> */}
 
         {draggable && (
-          <button className=" clickable  mx-2 ml-0  text-4xl  text-lighter-200" onClick={handleCloseClick}>
+          <button
+            className=" clickable  mx-2 ml-0  text-4xl  text-lighter-200"
+            onClick={handleCloseClick}
+          >
             x
           </button>
         )}

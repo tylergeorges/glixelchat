@@ -29,15 +29,15 @@ declare global {
       id: number;
     }
 
+    /** For React element events */
+    namespace Events {
+      type ButtonEvent = MouseEvent<HTMLButtonElement>;
+      type InputEvent = React.ChangeEvent<HTMLInputElement>;
+      type FormSubmit = React.SyntheticEvent;
+    }
+
     namespace Props {
-      interface ButtonProps extends HTMLProps<HTMLButtonElement> {
-        variant: "contained" | "outlined";
-      }
-
-      interface InputProps extends React.FormEvent<HTMLInputElement> {}
-      interface FormSubmit extends React.SyntheticEvent {}
-
-      export interface ProgramProps {
+      interface ProgramProps {
         children: ReactNode;
         bar_color: "dark" | "pink" | "light" | "lighter";
         program_name: string;
@@ -51,15 +51,19 @@ declare global {
         draggable?: boolean;
 
         extra_params?: string;
-        setShowProgram: Dispatch<SetStateAction<boolean>>
-
+        setShowProgram?: Dispatch<SetStateAction<boolean>>;
       }
 
-      export interface ProgramChildrenProps {
+      interface ProgramChildrenProps {
         zIndex: number;
         program_id: number;
         staticPost?: Post;
-        setShowProgram: Dispatch<SetStateAction<boolean>>
+        setShowProgram?: Dispatch<SetStateAction<boolean>>;
+      }
+
+      interface DesktopProps {
+        posts: Glixel.Post[];
+        user: User;
       }
     }
   }

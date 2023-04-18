@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { addToPosts, selectPosts, selectUser } from "@mainslice";
-import { InputWrapper, Post, Program, UserName } from "@ui";
+import { CurrentPost, InputWrapper, Post, Program } from "@ui";
 import { useAppDispatch, useAppSelector } from "@hooks";
 import { glixelApi } from "@util";
 
 export function PostsProgram({
   zIndex,
   program_id,
-  setShowProgram
+  setShowProgram,
 }: Glixel.Props.ProgramChildrenProps) {
   const posts = useAppSelector(selectPosts);
   const [currentPost, setCurrentPost] = useState<Glixel.Post>();
@@ -33,30 +32,11 @@ export function PostsProgram({
 
       dispatch(addToPosts(new_post));
     }
-    // try {
-
-    //   // const res = await fetch("http://localhost:3000/api/posts", {
-    //   //   method: "POST",
-    //   //   body: JSON.stringify({
-    //   //     authorId: user?.id,
-    //   //     content: post_content,
-    //   //   }),
-    //   // });
-
-    //   if (!res.ok) {
-    //     throw new Error("Creating post returned 404.");
-    //   }
-
-    // } catch (err) {
-    //   if (err instanceof Error) {
-    //     console.error("ERROR CREATING POST: ", err.message);
-    //   }
-    // }
   }
 
   return (
     <Program
-    setShowProgram={setShowProgram}
+      setShowProgram={setShowProgram}
       bar_color="dark"
       program_name="posts"
       zIndex={zIndex}
@@ -65,7 +45,8 @@ export function PostsProgram({
     >
       <div className="flex h-full w-full flex-col">
         <div className="flex h-full w-full flex-col overflow-y-auto">
-          {!post_id && !currentPost ? (
+          {/* Only render home posts if there isnt a current post being displayed. */}
+          {!currentPost ? (
             posts.map((post) => {
               return (
                 <Post
@@ -76,21 +57,7 @@ export function PostsProgram({
               );
             })
           ) : (
-            <div>
-              <div>
-                <h3 className="username text-2xl">
-                  {currentPost?.author.username}
-                </h3>
-              </div>
-              <div className="h-full     ">
-                <span className="text-xl line-clamp-4">
-                  {currentPost?.content}
-                </span>
-              </div>
-              <div className="w-full  text-left">
-                <span className="h-10 ">{currentPost?.createdAt}</span>
-              </div>
-            </div>
+            <CurrentPost post={currentPost} />
           )}
         </div>
         <InputWrapper submit_callback={createPost} />

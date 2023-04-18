@@ -1,15 +1,10 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import {
-  MessagesProgram,
-  PostsProgram,
-  TerminalProgram,
-  UserPanel,
-} from "@programs";
+import { MessagesProgram, PostsProgram, UserPanel } from "@programs";
 import { useAppSelector } from "@hooks";
 import { selectCurrentProfile } from "@mainslice";
 import { DesktopContext } from "@util";
-import { MessagesIcon, PostsIcon } from "@icons";
+import { DesktopIcons } from "src/components/ui/Desktop/DesktopIcons";
 
 export const Desktop = () => {
   const router = useRouter();
@@ -17,7 +12,6 @@ export const Desktop = () => {
   const [activeProgramId, setActiveProgramId] = useState<number>(2);
   const [showMessages, setShowMessages] = useState(true);
   const [showPosts, setShowPosts] = useState(true);
-  const [showTerminal, setShowTerminal] = useState(false);
   const current_profile = useAppSelector(selectCurrentProfile);
 
   const show_profile = useMemo(
@@ -28,48 +22,34 @@ export const Desktop = () => {
     setActiveProgramId(program_id);
   }
 
-  function openPostsClick() {
-    if (showPosts === false) {
-      setShowPosts(true);
-    }
-  }
-  function openMessagesClick() {
-    if (showMessages === false) {
-      setShowMessages(true);
-    }
-  }
+  const openPostsClick = useCallback(
+    function () {
+      if (showPosts === false) {
+        setShowPosts(true);
+      }
+    },
+    [showPosts]
+  );
+
+  const openMessagesClick = useCallback(
+    function () {
+      if (showMessages === false) {
+        setShowMessages(true);
+      }
+    },
+    [showMessages]
+  );
 
   return (
     <div
       id="desktop"
-      className="flex h-screen  w-full  items-start justify-center bg-lighter"
+      className="flex h-screen w-full items-start justify-center bg-lighter"
     >
-      <div className="flex h-full w-full items-start justify-start p-4 ">
-        <div className="flex h-1/6 items-center justify-center">
-          <div
-            className="text-[16px] h-1/2 self-baseline flex flex-col items-center justify-center p-2 hover:bg-[rgba(255,255,255,0.2)]"
-            onClick={openPostsClick}
-          >
-            <PostsIcon className="w-20" />
-            Posts
-          </div>
-          <div
-            className="text-[16px] text-end h-1/2  flex flex-col items-center justify-center p-2  self-baseline  hover:bg-[rgba(255,255,255,0.2)]"
-            onClick={openMessagesClick}
-          >
-            <MessagesIcon className="w-16 " />
-            Messages
-          </div>
-        </div>
-      </div>
+      <DesktopIcons
+        openMessagesClick={openMessagesClick}
+        openPostsClick={openPostsClick}
+      />
       <DesktopContext.Provider value={{ changeActiveProgram, activeProgramId }}>
-        {showTerminal && (
-          <TerminalProgram
-            program_id={0}
-            setShowProgram={setShowTerminal}
-            zIndex={router.query.program == "terminal" ? 10 : 0}
-          />
-        )}
         {showMessages && (
           <MessagesProgram
             program_id={1}

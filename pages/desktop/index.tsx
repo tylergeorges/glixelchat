@@ -6,38 +6,28 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { User } from "@prisma/client";
 import { Desktop, TaskBar } from "@ui";
-import { selectUser, setCurrentUser, setPosts } from "@mainslice";
-import { useAppDispatch, useAppSelector } from "@hooks";
+import { setCurrentUser, setPosts } from "@mainslice";
+import { useAppDispatch } from "@hooks";
 import { glixelApi } from "@util";
 
-type DesktopProps = {
-  posts: Glixel.Post[];
-  user: User;
-};
-
-export default function DesktopPage({ posts, user }: DesktopProps) {
+export default function DesktopPage({
+  posts,
+  user,
+}: Glixel.Props.DesktopProps) {
   const router = useRouter();
   const { status } = useSession();
 
   const dispatch = useAppDispatch();
 
-  // const user_store = useAppSelector(selectUser);
-
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
     }
-    if(status === "authenticated"){
+    if (status === "authenticated") {
       dispatch(setPosts(posts));
       dispatch(setCurrentUser(user));
-
     }
-  }, [status]);
-
-  // useEffect(() => {
-
-  
-  // }, [dispatch]);
+  }, [status, dispatch, posts, router, user]);
 
   if (status === "authenticated") {
     return (
@@ -56,8 +46,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const user = (await glixelApi("/users").get({
     queryParams: `?email=${session.user.email}`,
   })) as User;
-
-  console.log(session.user.name);
 
   const posts = await glixelApi("/users/:user_id/feed").get({
     user_id: user.id,
