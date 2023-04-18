@@ -6,6 +6,7 @@ export const test_user: User = {
   id: "200",
   username: "test user",
   createdAt: new Date(),
+  email: "teatrew",
 };
 
 export function MessagesProgram({
