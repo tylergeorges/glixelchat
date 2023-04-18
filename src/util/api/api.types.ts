@@ -3,10 +3,10 @@ import { User } from "@prisma/client";
 export interface ApiResponseError {
   message: string;
 }
-
 export type PathParams<TPath extends string> =
   TPath extends `/${infer Head}/:${infer Param}/${infer Tail}` ? string : TPath;
 
+//! Checks if the provided function argument has parameters or not
 export type ArgPath<T extends string> = T extends keyof Paths
   ? PathParams<T>
   : never;
