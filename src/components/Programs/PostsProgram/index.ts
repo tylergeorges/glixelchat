@@ -1,0 +1,1 @@
+export { PostsProgram } from "./PostsProgram";

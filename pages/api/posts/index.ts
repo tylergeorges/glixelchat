@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client";
+import { Post, PrismaClient, User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const prisma = new PrismaClient();
@@ -8,20 +8,15 @@ type PostBody = {
   content: string;
 };
 
-export type PostResponse = {
-  author: User;
-  id: string;
-  createdAt: string;
-  content: string;
-  authorId: string;
-};
 export type ErrorResponse = {
   message: string;
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PostResponse[] | PostResponse | ErrorResponse>
+  res: NextApiResponse<
+  (Post & { author: User }) | ErrorResponse
+  >
 ) {
   if (req.method === "POST") {
     const post_body = JSON.parse(req.body) as PostBody;

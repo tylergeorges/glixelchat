@@ -1,3 +1,4 @@
+import { glixelApi } from "@util";
 import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -15,10 +16,15 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account, credentials, email, profile }) {
       if (user.name) {
-        const post_body = { username: user.name };
-        const new_user = await fetch("http://localhost:3000/api/users", {
-          method: "POST",
-          body: JSON.stringify(post_body),
+        // const post_body = { username: user.name };
+        // const new_user = await fetch("http://localhost:3000/api/users", {
+        //   method: "POST",
+        //   body: JSON.stringify(post_body),
+        // });
+
+        const new_user = await glixelApi("/users").post({
+          email: user.email as string,
+          username: user.name as string
         });
 
         console.log("new user created in next auth: ", new_user);

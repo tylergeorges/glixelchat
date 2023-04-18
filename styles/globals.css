@@ -12,7 +12,8 @@
 } */
 @font-face {
   font-family: "PixelBold";
-  src: url("../public/fonts/REGUB___.ttf");
+  /* src: url("../public/fonts/REGUB___.ttf"); */
+  src: url("../public/fonts/KemcoPixelBold.ttf");
 }
 @font-face {
   font-family: "Heritage";
@@ -86,6 +87,8 @@ a {
   --dark: #161616;
   --light: #1f1f1f;
   --lighter: #303030;
+  --lighter-100: rgb(55, 55, 55);
+  --lighter-200: rgb(78, 78, 78);
 }
 
 .main {
@@ -144,10 +147,18 @@ a {
   background-color: var(--white);
   text-decoration: none;
 }
+
+/* .title-bar-lines:after{
+  content: "";
+  background-color: var(--lighter-200);
+  width: 100%;
+} */
 .user-panel_username {
   font-family: "PixelBold";
 }
-
+.bold{
+  font-family: "PixelBold";
+}
 .title-bar-dark {
   font-family: "PixelBold";
 }
@@ -225,6 +236,17 @@ a {
 
 .input {
   border-image-source: var(--lighter-pixel-border);
+
+  border-image-slice: 3;
+  border-image-repeat: stretch;
+  border-image-width: 3;
+  border-image-outset: 2;
+  border-width: 5px;
+  border-style: solid;
+  outline: none;
+}
+.input-error{
+  border-image-source: var(--red-pixel-border);
 
   border-image-slice: 3;
   border-image-repeat: stretch;

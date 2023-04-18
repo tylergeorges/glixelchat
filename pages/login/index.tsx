@@ -1,13 +1,13 @@
-import { signIn, useSession } from "next-auth/react";
-import { Terminal } from "../../src/components/Terminal";
-import { Program } from "../../src/components/Program";
-import { TerminalInput } from "../../src/components/Terminal/TerminalInput";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useAppSelector } from "@hooks";
+import { selectUser } from "@mainslice";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
+  const user = useAppSelector(selectUser);
   useEffect(() => {
     if (status === "authenticated") {
       router.push("/desktop");

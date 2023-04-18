@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import { useSession } from "next-auth/react";
-import { NavBar } from "../src/components/NavBar";
+import { NavBar } from "../src/components/ui/NavBar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 

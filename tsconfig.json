@@ -13,8 +13,25 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@icons": ["./src/components/icons"],
+      "@ui": ["./src/components/ui"],
+      "@programs": ["./src/components/Programs"],
+      "@mainslice": ["./src/redux/slices/mainSlice.ts"],
+      "@hooks": ["./src/hooks"],
+      "@util": ["./src/util"]
+    },
+    "noImplicitReturns": false
   },
-  "include": ["env.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+
+  "include": [
+    "./src/types/glixel.d.ts",
+    "env.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }

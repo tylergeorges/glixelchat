@@ -15,6 +15,7 @@ datasource db {
 
 model User {
   username    String    @db.VarChar(20)@unique
+  email       String    @db.VarChar(256)@unique
   createdAt   DateTime @default(now())
   id          String @id @default(cuid())
   posts     Post[]

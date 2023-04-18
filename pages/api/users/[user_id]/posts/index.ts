@@ -12,10 +12,10 @@ export default async function handler(
   if (req.method === "GET") {
     const { user_id } = req.query;
 
-    console.log("GETTING FEED FOR: ", user_id);
+    console.log("GETTING POSTS FROM: ", user_id);
     if (!user_id)
       return res.status(400).json({
-        message: "Error fetching feed for user, no user_id was provided.",
+        message: "Error fetching posts for user, no user_id was provided.",
       });
 
     const posts = await prisma.post.findMany({
@@ -26,7 +26,7 @@ export default async function handler(
         author: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
       take: 100,
     });

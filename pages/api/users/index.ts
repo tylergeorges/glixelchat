@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 const prisma = new PrismaClient();
 
 type UserBody = {
+  email: string;
   username: string;
 };
 
@@ -14,16 +15,16 @@ export default async function handler(
   res: NextApiResponse<User | { message: string }>
 ) {
   if (req.method === "GET") {
-    const username = req.query.username;
+    const email = req.query.email;
 
-    if (!username)
+    if (!email)
       return res
         .status(400)
-        .json({ message: "Error fetching user, no username was provided." });
+        .json({ message: "Error fetching user, no email was provided." });
 
     const user = await prisma.user.findUnique({
       where: {
-        username: username as string,
+        email: email as string,
       },
     });
 
@@ -32,15 +33,16 @@ export default async function handler(
     } else {
       return res
         .status(400)
-        .json({ message: `[ERROR] User ${username} does not exist.` });
+        .json({ message: `[ERROR] User with email ${email} does not exist.` });
     }
   }
   if (req.method === "POST") {
     const user = JSON.parse(req.body) as UserBody;
 
+
     const user_exists = await prisma.user.findUnique({
       where: {
-        username: user.username,
+        email: user.email,
       },
     });
 
@@ -48,6 +50,7 @@ export default async function handler(
       const new_user = await prisma.user.create({
         data: {
           username: user.username,
+          email: user.email,
         },
       });
 

@@ -12,7 +12,7 @@ export default function RegisterPage() {
           <div className="flex h-full w-full items-center justify-center">
             <button
               className="auth-button  h-20   w-full bg-lighter p-1 text-lg "
-              onClick={() => ("google")}
+              onClick={() => "google"}
             >
               Register with Google
             </button>

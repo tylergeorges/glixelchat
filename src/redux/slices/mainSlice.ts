@@ -1,16 +1,21 @@
 import { User } from "@prisma/client";
 import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
-import { PostResponse } from "../../../pages/api/posts/index";
 
 interface InitialState {
   user: User | undefined;
-  posts: PostResponse[];
-  current_profile: string;
+  posts: Glixel.Post[];
+  current_profile: {
+    user: User | undefined;
+    posts: Glixel.Post[];
+  };
 }
 const initialState = {
   user: undefined,
   posts: [],
-  current_profile: "",
+  current_profile: {
+    posts: [],
+    user: undefined,
+  },
 } as InitialState;
 
 const mainSlice = createSlice({
@@ -18,17 +23,21 @@ const mainSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<User>) => {
+      console.log("SETCURRENTUSER ACTOIN: ", action.payload);
       state.user = action.payload;
       //   return { ...state, user: action.payload };
     },
-    setPosts: (state, action: PayloadAction<PostResponse[]>) => {
+    setPosts: (state, action: PayloadAction<Glixel.Post[]>) => {
       console.log(action.payload);
       state.posts = action.payload;
     },
-    addToPosts: (state, action: PayloadAction<PostResponse>) => {
+    addToPosts: (state, action: PayloadAction<Glixel.Post>) => {
       return { ...state, posts: [action.payload, ...state.posts] };
     },
-    setCurrentProfile: (state, action: PayloadAction<string>) => {
+    setCurrentProfile: (
+      state,
+      action: PayloadAction<{ user: User; posts: Glixel.Post[] }>
+    ) => {
       state.current_profile = action.payload;
     },
   },
@@ -40,7 +49,9 @@ export const selectPosts = createSelector(
   (mainSlice) => mainSlice.posts
 );
 
-export const selectCurrentProfile = (state:State) => state.mainSlice.current_profile
+export const selectCurrentProfile = (state: State) =>
+  state.mainSlice.current_profile;
 export const selectUser = (state: State) => state.mainSlice.user;
-export const { setCurrentUser, addToPosts, setPosts, setCurrentProfile } = mainSlice.actions;
+export const { setCurrentUser, addToPosts, setPosts, setCurrentProfile } =
+  mainSlice.actions;
 export default mainSlice.reducer;
