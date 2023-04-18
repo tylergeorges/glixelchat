@@ -22,7 +22,6 @@ export function PostsProgram({
 
   async function createPost(post_content: string) {
     if (user) {
-      console.log("AUTHOR ID: ", user);
       const res = await glixelApi("/posts").post({
         authorId: user.id as string,
         content: post_content,

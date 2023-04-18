@@ -21,7 +21,6 @@ export default async function handler(
   if (req.method === "POST") {
     const post_body = JSON.parse(req.body) as PostBody;
 
-    console.log("POST BODY: ", post_body);
     const post = await prisma.post.create({
       data: {
         authorId: post_body.authorId,
@@ -32,7 +31,6 @@ export default async function handler(
       },
     });
 
-    console.log("POST CREATED: ", post);
     return res.status(201).json(post);
   }
 }

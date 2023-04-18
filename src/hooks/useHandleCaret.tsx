@@ -32,7 +32,6 @@ export const useHandleCaret = ({ term_text }: HandleCaretProps) => {
       }
       case RIGHT_ARROW:
         {
-          console.log(caret_x / CARET_WIDTH);
           caret_x += CARET_WIDTH;
 
           caret.style.left = caret_x + "px";

@@ -23,11 +23,9 @@ const mainSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<User>) => {
-      console.log("SETCURRENTUSER ACTOIN: ", action.payload);
       state.user = action.payload;
     },
     setPosts: (state, action: PayloadAction<Glixel.Post[]>) => {
-      console.log(action.payload);
       state.posts = action.payload;
     },
     addToPosts: (state, action: PayloadAction<Glixel.Post>) => {

@@ -39,7 +39,8 @@ export function MessagesProgram({
           id="server-content"
           className="mt-1 flex h-full w-full items-start  justify-start "
         >
-          {convos.map((convo) => {
+          <span>Coming soon!</span>
+          {/* {convos.map((convo) => {
             return (
               <div
                 className="clickable conversation-preview_con flex h-28 w-1/2   flex-col overflow-hidden break-words bg-lighter p-1 text-left text-white"
@@ -53,7 +54,7 @@ export function MessagesProgram({
                 </span>
               </div>
             );
-          })}
+          })} */}
         </div>
       </div>
     </Program>

@@ -24,10 +24,8 @@ export const authOptions = {
 
         const new_user = await glixelApi("/users").post({
           email: user.email as string,
-          username: user.name as string
+          username: user.name as string,
         });
-
-        console.log("new user created in next auth: ", new_user);
       }
 
       return true;

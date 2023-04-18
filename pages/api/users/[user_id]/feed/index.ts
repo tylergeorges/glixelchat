@@ -12,7 +12,6 @@ export default async function handler(
   if (req.method === "GET") {
     const { user_id } = req.query;
 
-    console.log("GETTING FEED FOR: ", user_id);
     if (!user_id)
       return res.status(400).json({
         message: "Error fetching feed for user, no user_id was provided.",
