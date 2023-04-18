@@ -21,8 +21,6 @@ const Home: NextPage = () => {
         <div className="flex h-full w-full items-center justify-center text-center">
           <span className=" flex  flex-col items-center text-center text-[20rem] ">
             <span className="app-name_header_animated">glixel</span>
-            {/* <div className="caret    text-center">e</div>l */}
-            {/* <span className="caret text-[10rem]  ">_</span> */}
 
             <sub className="app_subheader mt-[-50px] text-xl text-yellow-400">
               [ a chat app. ]
@@ -30,10 +28,7 @@ const Home: NextPage = () => {
           </span>
         </div>
 
-        {/* <div className="landing-modal absolute right-10 bottom-10 flex h-36 w-1/3 flex-col bg-light p-4">
-        <h1 className="landing-modal_header text-2xl">NEW MESSAGE!</h1>
-        <span className="  mt-4 ">click here to open.</span>
-      </div> */}
+      
       </div>
     );
   }

@@ -41,7 +41,8 @@ export default function DesktopPage({
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
-  if (!session || !session.user) return;
+  if (!session || !session.user)
+    return { props: { message: "No current session for user." } };
 
   const user = (await glixelApi("/users").get({
     queryParams: `?email=${session.user.email}`,

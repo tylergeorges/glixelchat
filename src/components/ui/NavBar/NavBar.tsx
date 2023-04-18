@@ -6,9 +6,6 @@ export function NavBar() {
       <Link href={"/login"} className="clickable mr-5 text-lg">
         login
       </Link>
-      <Link href={"/register"} className="clickable mr-5 text-lg">
-        register
-      </Link>
     </nav>
   );
 }
